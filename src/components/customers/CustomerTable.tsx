@@ -1,7 +1,18 @@
+"use client"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
 import { Trash2, Pencil } from 'lucide-react'
 import {Button} from '@/components/ui/button'
-import EditCustomerDialog from './EditCustomerDialog'
+import {
+AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useState } from 'react';
 
 type Customer = {
     id: string,
@@ -41,6 +52,7 @@ export default function CustomerTable({customers, onDelete, onEdit}: {
     onDelete: (id: string) => void;
     onEdit: (customer: Customer) => void;
 }) {
+    const [deleteId, setDeleteId] = useState<string | null>
     return(
         <div className='rounded-xl border bg-white'>
             <Table>
@@ -56,7 +68,8 @@ export default function CustomerTable({customers, onDelete, onEdit}: {
                 </TableHeader>
 
                 <TableBody>
-                    {customers.map((customer) => (
+                    {customers.length > 0 ? (
+                     customers.map((customer) => (
                         <TableRow key={customer.id}>
                             <TableCell>{customer.id}</TableCell>
                             <TableCell className="font-medium">
@@ -81,17 +94,53 @@ export default function CustomerTable({customers, onDelete, onEdit}: {
                                     <Button variant="ghost" size="icon" onClick={() => onEdit(customer)}>
                                         <Pencil size={16} />
                                     </Button>
-                                    <Button variant="ghost" size="icon" onClick={() => onDelete(customer.id)} >
+                                    <Button variant="ghost" size="icon" onClick={() => setDeleteId(customer.id)} >
                                         <Trash2 size={16} className='text-red-500' />
                                     </Button>
                                 </div>
                             </TableCell>
                         </TableRow>
-                    ))}
+                    ))) :(
+                        <TableRow>
+                            <TableCell colSpan={6} className='h-32 text-center text-gray-500'>
+                                No customers found
+                            </TableCell>
+                        </TableRow>
+                )}
                 </TableBody>
             </Table>
 
-        
+            <AlertDialog open={deleteId !== null} onOpenChange={(open) => {
+                if(!open) setDeleteId(null);
+            }}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>
+                            Are you absolute sure? 
+                        </AlertDialogTitle>
+                        
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete this customer.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>
+                            Cancel
+                        </AlertDialogCancel>
+
+                        <AlertDialogAction onClick={() => {
+                            if (deleteId){
+                                onDelete(deleteId);
+                                setDeleteId(null);
+                            }
+                        }} className="bg-red-600 hover:bg-red-700">
+                            Delete
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }

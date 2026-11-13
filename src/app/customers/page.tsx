@@ -5,6 +5,7 @@ import CustomerTable from "@/components/customers/CustomerTable";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { useState } from "react";
 import EditCustomerDialog from "@/components/customers/EditCustomerDialog";
+import CustomerSearch from "@/components/customers/CustomerSearch";
 
 type Customer = {
   id: string;
@@ -20,6 +21,7 @@ export default function CustomersPage() {
     const [customers, setCustomers] = useState<Customer[]>([]);
     
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+    const [search, setSearch] = useState("");
 
     function handleAddCustomer(data: Omit<Customer, "id" | "status">){
         const newCustomer: Customer = {
@@ -41,6 +43,16 @@ export default function CustomersPage() {
         ))
     }
 
+    const filteredCustomers = customers.filter((customer) => {
+        const searchTerm = search.toLowerCase();
+
+        return(
+            customer.name.toLowerCase().includes(searchTerm) ||
+            customer.email.toLowerCase().includes(searchTerm) ||
+            customer.phone.toLowerCase().includes(searchTerm)
+        )
+    })
+
     return(
         <DashboardLayout title="Customers">
             <div className="mb-6 flex items-center justify-between">
@@ -50,10 +62,14 @@ export default function CustomersPage() {
                 </div>
 
                 <CustomerForm onAdd={handleAddCustomer} />
+
                     
             </div>
+                <div className="mb-4">
+                    <CustomerSearch search={search} onSearchChange={setSearch} />
+                </div>
 
-            <CustomerTable customers={customers} onDelete={handleDeleteCustomer} onEdit={setSelectedCustomer} />
+            <CustomerTable customers={filteredCustomers} onDelete={handleDeleteCustomer} onEdit={setSelectedCustomer} />
 
             <EditCustomerDialog customer={selectedCustomer} onClose={() => setSelectedCustomer(null)} onUpdate={handleUpdateCustomer} />
         </DashboardLayout>
