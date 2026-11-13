@@ -10,7 +10,7 @@ const navItems = [
     },
     {
         name: "customers" ,
-        href: "/custormers",
+        href: "/customers",
         icon: Users
     },
     {

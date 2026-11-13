@@ -9,7 +9,7 @@ export default function DashboardPage() {
       <div className="mb-6">
         <h2 className="text-2xl font-bold">Overview</h2>
         <p className="mt-1 text-sm text-gray-500">
-          Here is what's happening with your business.
+          Here is what&apos;s happening with your business.
         </p>
       </div>
 
