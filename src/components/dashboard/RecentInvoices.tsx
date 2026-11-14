@@ -1,90 +1,60 @@
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
-import {Table, TableBody,TableHeader, TableRow, TableHead, TableCell } from '@/components/ui/table'
+type RecentInvoice = {
+  _id: string;
+  invoiceNumber: string;
+  customer: { name: string };
+  total: number;
+  dueDate: string;
+  status: string;
+};
 
-type InvoiceType = {
-    id: string,
-    customer: string,
-    amount: string,
-    dueDate: string,
-    status: string
-}
+type Props = { invoices: RecentInvoice[] };
 
-const invoices : InvoiceType[] = [
-  {
-    id: "INV-1001",
-    customer: "Acme Inc.",
-    amount: "$1,200",
-    dueDate: "Nov 10, 2026",
-    status: "Paid",
-  },
-  {
-    id: "INV-1002",
-    customer: "Tech Solutions",
-    amount: "$850",
-    dueDate: "Nov 12, 2026",
-    status: "Pending",
-  },
-  {
-    id: "INV-1003",
-    customer: "Cloud Systems",
-    amount: "$2,400",
-    dueDate: "Nov 14, 2026",
-    status: "Overdue",
-  },
-  {
-    id: "INV-1004",
-    customer: "Digital Works",
-    amount: "$650",
-    dueDate: "Nov 15, 2026",
-    status: "Paid",
-  },
-];
+const statusColors: Record<string, string> = {
+  Draft:   "bg-gray-100 text-gray-600",
+  Pending: "bg-yellow-100 text-yellow-700",
+  Paid:    "bg-green-100 text-green-700",
+  Overdue: "bg-red-100 text-red-700",
+};
 
-
-export default function RecentInvoices() {
-    return(
-        <div className="rounded-xl border bg-white p-5 shadow-sm">
-            <div className="mb-5">
-                <h2 className="text-lg font-semibold">Recent Invoices</h2>
-                <p className="text-sm text-gray-500">Latest billing activity</p>
-            </div>
-
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Invoice</TableHead>
-                        <TableHead>Customer</TableHead>
-                        <TableHead>Amount</TableHead>
-                        <TableHead>Due Date</TableHead>
-                        <TableHead>Status</TableHead>
-                    </TableRow>
-                </TableHeader>
-
-                <TableBody>
-                    {
-                        invoices.map((item) => (
-                            <TableRow key={item.id}>
-                                <TableCell className='font-medium'>{item.id}</TableCell>
-                                <TableCell>{item.customer}</TableCell>
-                                <TableCell>{item.amount}</TableCell>
-                                <TableCell>{item.dueDate}</TableCell>
-
-                                <TableCell>
-                                    <span className={`rounded-full px-2 py-1 text-xs font-medium 
-                                     ${item.status === "paid" 
-                                        ? "bg-green-100 text-green-700" 
-                                        : item.status === "Pending"
-                                        ? "bg-yellow-100 text-yellow-700"
-                                        : "bg-red-100 text-red-700"
-                                      }`}>
-                                            {item.status}
-                                    </span>
-                                </TableCell>
-                            </TableRow>
-                        ))
-                    }
-                </TableBody>
-            </Table>
-        </div>
-    )
+export default function RecentInvoices({ invoices }: Props) {
+  return (
+    <div className="rounded-xl border bg-white p-5 shadow-sm">
+      <div className="mb-5">
+        <h2 className="text-lg font-semibold">Recent Invoices</h2>
+        <p className="text-sm text-gray-500">Latest billing activity</p>
+      </div>
+      {invoices.length === 0 ? (
+        <p className="py-8 text-center text-sm text-gray-500">No invoices yet</p>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Invoice</TableHead>
+              <TableHead>Customer</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Due Date</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {invoices.map((item) => (
+              <TableRow key={item._id}>
+                <TableCell className="font-medium">{item.invoiceNumber}</TableCell>
+                <TableCell>{item.customer?.name}</TableCell>
+                <TableCell>${Number(item.total).toFixed(2)}</TableCell>
+                <TableCell>{new Date(item.dueDate).toLocaleDateString("en-IN")}</TableCell>
+                <TableCell>
+                  <span className={`rounded-full px-2 py-1 text-xs font-medium ${statusColors[item.status] ?? "bg-gray-100 text-gray-600"}`}>
+                    {item.status}
+                  </span>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </div>
+  );
 }
