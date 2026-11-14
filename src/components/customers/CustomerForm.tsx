@@ -15,14 +15,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {  Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 
 const customerSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
    email: z.string().email("Please enter a valid email"),
-   phone: z.string().min(10, "Please must contain at least 10 characters"),
+   phone: z.string().min(10, "Phone must contain at least 10 digits"),
    address: z.string().min(5, "Address is required") 
 })
 
@@ -34,7 +35,7 @@ type CustomerFormProps = {
     email: string;
     phone: string;
     address: string;
-  }) => void;
+  }) => Promise<void>;
 };
 
 
@@ -44,17 +45,23 @@ export default function CustomerForm({onAdd} : CustomerFormProps) {
     const {
         register,
         handleSubmit,
-        formState: {errors},
+        formState: {errors, isSubmitting},
         reset,
     } = useForm<CustomerFormValues>({
         resolver: zodResolver(customerSchema)
     })
 
-    function onSubmit(data: CustomerFormValues){
-        console.log("customer data: ", data);
-        onAdd(data);
-        reset();
-        setOpen(false);
+    async function onSubmit(data: CustomerFormValues){
+        try{
+            await onAdd(data);
+
+            reset();
+            setOpen(false);
+        }
+        catch(error: unknown){
+            const message = error instanceof Error ? error.message : "Failed to create customer";
+            toast.error(message);
+        }
     }
 
     return(
@@ -104,8 +111,8 @@ export default function CustomerForm({onAdd} : CustomerFormProps) {
                         )}
                     </div>
 
-                    <Button type="submit" className="w-full">
-                        Save Customer
+                    <Button type="submit" className="w-full" disabled={isSubmitting}>
+                        {isSubmitting ? "Saving..." : "Save Customer"}
                     </Button>
                 </form>
             </DialogContent>

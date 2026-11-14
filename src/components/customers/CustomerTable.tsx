@@ -19,6 +19,7 @@ type Customer = {
     name: string,
     email: string,
     phone: string,
+    address: string,
     status: "Active" | "Inactive"
 }
 
@@ -52,7 +53,7 @@ export default function CustomerTable({customers, onDelete, onEdit}: {
     onDelete: (id: string) => void;
     onEdit: (customer: Customer) => void;
 }) {
-    const [deleteId, setDeleteId] = useState<string | null>
+    const [deleteId, setDeleteId] = useState<string | null>(null)
     return(
         <div className='rounded-xl border bg-white'>
             <Table>
