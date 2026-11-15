@@ -1,6 +1,6 @@
-# BillFlow – Billing & Subscription Management SaaS
+# Paylance – Billing & Subscription Management SaaS
 
-BillFlow is a full-stack Billing and Subscription Management SaaS application built for businesses to manage customers, product catalogs, recurring subscriptions, invoices with PDF generation, and payment tracking with real-time financial metrics from a centralized dashboard.
+Paylance is a full-stack Billing and Subscription Management SaaS application built for businesses to manage customers, product catalogs, recurring subscriptions, invoices with PDF generation, and payment tracking with real-time financial metrics from a centralized dashboard.
 
 ---
 
@@ -117,7 +117,7 @@ billing-saas/
 Create a `.env.local` file in the root directory:
 
 ```env
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/billflow?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/paylance?retryWrites=true&w=majority
 ```
 
 > **Note**: Do not commit `.env.local` to version control. The MongoDB connection string must be configured as an environment variable in your deployment platform (e.g. Vercel).
@@ -171,7 +171,7 @@ npm run build
 
 1. Push your repository to GitHub or GitLab.
 2. Sign in to [Vercel](https://vercel.com) and click **"Add New Project"**.
-3. Import your BillFlow repository.
+3. Import your Paylance repository.
 4. In the **Environment Variables** section, add:
    - Key: `MONGODB_URI`
    - Value: Your MongoDB connection string (e.g., from MongoDB Atlas)

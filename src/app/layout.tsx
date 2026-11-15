@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BillFlow – Billing & Subscription Management",
+  title: "Paylance – Billing & Subscription Management",
   description: "Professional Billing & Subscription Management SaaS",
 };
 

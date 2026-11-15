@@ -40,8 +40,8 @@ export async function GET(_req: Request, { params }: Props) {
     // Header background
     page.drawRectangle({ x: 0, y: height - 90, width, height: 90, color: blue });
 
-    // BillFlow branding
-    page.drawText('BillFlow', { x: 40, y: height - 45, size: 28, font: fontBold, color: rgb(1, 1, 1) });
+    // Paylance branding
+    page.drawText('Paylance', { x: 40, y: height - 45, size: 28, font: fontBold, color: rgb(1, 1, 1) });
     page.drawText('Billing & Subscription Management', { x: 40, y: height - 65, size: 10, font: fontReg, color: rgb(0.85, 0.9, 1) });
 
     // Invoice title
@@ -128,7 +128,7 @@ export async function GET(_req: Request, { params }: Props) {
 
     // Footer
     page.drawLine({ start: { x: 40, y: 50 }, end: { x: width - 40, y: 50 }, thickness: 0.5, color: lightGray });
-    page.drawText('Thank you for your business! | BillFlow – Billing & Subscription Management', {
+    page.drawText('Thank you for your business! | Paylance – Billing & Subscription Management', {
       x: 40, y: 35, size: 9, font: fontReg, color: gray,
     });
 

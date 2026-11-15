@@ -19,7 +19,7 @@ export default function Sidebar() {
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-white p-5 sticky top-0">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-blue-600">BillFlow</h1>
+        <h1 className="text-2xl font-bold text-blue-600">Paylance</h1>
         <p className="text-sm text-gray-500">Billing & Subscription</p>
       </div>
 
@@ -46,7 +46,7 @@ export default function Sidebar() {
       </nav>
 
       <div className="mt-auto pt-6 border-t">
-        <p className="text-xs text-gray-400 text-center">BillFlow v1.0.0</p>
+        <p className="text-xs text-gray-400 text-center">Paylance v1.0.0</p>
       </div>
     </aside>
   );

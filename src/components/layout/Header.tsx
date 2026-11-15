@@ -10,13 +10,13 @@ const Header = ({title}: HeaderProp) => {
         <h1 className="text-xl font-semibold text-gray-800">{title}</h1>
 
         <div className="flex items-center gap-5">
-            <div className="flex items-center gap-2 rounded-lg border px-3 py-2">
+            {/* <div className="flex items-center gap-2 rounded-lg border px-3 py-2">
 
                 <Search size={18} className="text-gray-400"/>
 
                 <input type="text" placeholder="Search...."  className="w-40 text-sm outline-none"/>
 
-            </div>
+            </div> */}
 
             <button  className="relative text-gray-600 hover:text-blue-600">
                 <Bell size={18} />
